@@ -134,6 +134,16 @@ export class SideDrawer extends React.Component<SideDrawerProps, SideDrawerState
   private otherNavLinks(): NavAction[] {
     const { user, onClose, onOpenAbout } = this.props;
 
+    const supervisors: NavAction = {
+      name: "supervisor",
+      title: STRINGS.supervisor,
+      tooltip: "Supervisor Admin",
+      onClick: () => {
+        onClose();
+        onOpenAbout();
+      }
+    };
+
     const info: NavAction = {
       name: "info",
       title: STRINGS.infoAndFeedback,
@@ -154,10 +164,10 @@ export class SideDrawer extends React.Component<SideDrawerProps, SideDrawerState
           openSettings();
         }
       };
-      return [settings, info];
+      return [settings, supervisors, info];
     }
 
-    return [info];
+    return [supervisors, info];
   }
 
   render() {

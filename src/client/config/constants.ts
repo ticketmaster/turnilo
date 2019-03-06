@@ -155,6 +155,7 @@ export const STRINGS: any = {
   stringSearch: "String search",
   subsplit: "Split",
   suggestion: "suggestion",
+  supervisor: "Supervisor",
   timeShift: "Time shift",
   timeShiftExamples: "e.g. P2W or P1Y",
   timezone: "Timezone",
