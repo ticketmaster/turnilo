@@ -37,7 +37,7 @@ export interface SideDrawerProps {
   onClose: Fn;
   customization?: Customization;
   itemHrefFn?: (oldItem?: DataCube, newItem?: DataCube) => string;
-  viewType: "home" | "cube" | "settings" | "no-data";
+  viewType: "home" | "cube" | "settings" | "no-data" | "supervisor";
 }
 
 function openHome() {
@@ -46,6 +46,10 @@ function openHome() {
 
 function openSettings() {
   window.location.hash = "#settings";
+}
+
+function openSupervisor() {
+  window.location.hash = "#supervisor";
 }
 
 export interface SideDrawerState {
@@ -140,7 +144,7 @@ export class SideDrawer extends React.Component<SideDrawerProps, SideDrawerState
       tooltip: "Supervisor Admin",
       onClick: () => {
         onClose();
-        onOpenAbout();
+        openSupervisor();
       }
     };
 

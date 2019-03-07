@@ -34,6 +34,7 @@ import { replaceHash } from "../../utils/url/url";
 import { CubeView } from "../../views/cube-view/cube-view";
 import { HomeView } from "../../views/home-view/home-view";
 import { NoDataView } from "../../views/no-data-view/no-data-view";
+import { SupervisorView } from "../../views/supervisor-view/supervisor-view";
 import "./turnilo-application.scss";
 
 export interface TurniloApplicationProps {
@@ -55,11 +56,12 @@ export interface TurniloApplicationState {
   cubeViewSupervisor?: ViewSupervisor;
 }
 
-export type ViewType = "home" | "cube" | "no-data";
+export type ViewType = "home" | "cube" | "no-data" | "supervisor";
 
 export const HOME: ViewType = "home";
 export const CUBE: ViewType = "cube";
 export const NO_DATA: ViewType = "no-data";
+export const SUPERVISOR: ViewType = "supervisor";
 
 const transitionTimeout = { enter: 500, exit: 300 };
 
@@ -194,6 +196,8 @@ export class TurniloApplication extends React.Component<TurniloApplicationProps,
     if (!viewType || viewType === HOME) return HOME;
 
     if (viewType === NO_DATA) return NO_DATA;
+
+    if (viewType === SUPERVISOR) return SUPERVISOR;
 
     return CUBE;
   }
@@ -369,6 +373,15 @@ export class TurniloApplication extends React.Component<TurniloApplicationProps,
           customization={customization}
           transitionFnSlot={this.sideBarHrefFn}
           supervisor={cubeViewSupervisor}
+        />;
+
+      case SUPERVISOR:
+        return <SupervisorView
+          user={user}
+          dataCubes={dataCubes}
+          onNavClick={this.sideDrawerOpen}
+          onOpenAbout={this.openAboutModal}
+          customization={customization}
         />;
 
       default:
