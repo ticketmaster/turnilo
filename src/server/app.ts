@@ -30,6 +30,7 @@ import { plyqlRouter } from "./routes/plyql/plyql";
 import { plywoodRouter } from "./routes/plywood/plywood";
 import { readinessRouter } from "./routes/readiness/readiness";
 import { shortenRouter } from "./routes/shorten/shorten";
+import { supervisorRouter } from "./routes/supervisor/supervisor";
 import { turniloRouter } from "./routes/turnilo/turnilo";
 import { SettingsGetter } from "./utils/settings-manager/settings-manager";
 import { errorLayout } from "./views";
@@ -107,6 +108,7 @@ addRoutes("/plyql", plyqlRouter(settingsGetter));
 addRoutes("/mkurl", mkurlRouter(settingsGetter));
 addRoutes("/shorten", shortenRouter(settingsGetter));
 addRoutes("/error", errorRouter);
+addRoutes("/supervisor", supervisorRouter(settingsGetter));
 
 // View routes
 if (SERVER_SETTINGS.getIframe() === "deny") {
