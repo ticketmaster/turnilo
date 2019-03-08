@@ -79,6 +79,7 @@ export const STRINGS: any = {
   dataCubes: "Data Cubes",
   noDataCubes: "No Data Cubes present",
   noDataCubesFound: "No Data Cubes found for query: ",
+  noDataSupervisors: "No Supervisors present",
   delete: "Delete",
   deleteCollection: "Delete this collection",
   deleteCollectionTile: "Delete this tile",

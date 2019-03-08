@@ -36,7 +36,8 @@ export interface SupervisorViewProps {
 }
 
 export interface SupervisorViewState {
-  query: string;
+  supervisors: any;
+  error?: string;
 }
 
 function goToSettings() {
@@ -45,10 +46,19 @@ function goToSettings() {
 
 export class SupervisorView extends React.Component<SupervisorViewProps, SupervisorViewState> {
 
-  state = { query: "" };
+  componentDidMount() {
+    this.fetchSupervisors()
+      .then(({ supervisors }) => {
+        this.setState({ supervisors });
+      })
+      .catch(() => {
+        this.setState({ error: "Couldn't fetch supervisors" });
+      });
+  }
 
-  queryChange = (query: string) => {
-    this.setState(state => ({ ...state, query }));
+  fetchSupervisors() {
+    return fetch("/supervisor")
+      .then(response => response.json());
   }
 
   renderSettingsIcon() {
@@ -60,9 +70,26 @@ export class SupervisorView extends React.Component<SupervisorViewProps, Supervi
     </div>;
   }
 
+  renderSupervisor({ id, spec }: any): JSX.Element {
+    return <li key={id}>{id}</li>;
+  }
+
+  renderSupervisors(): JSX.Element {
+    if (this.state && this.state.supervisors) {
+      const { supervisors } = this.state;
+
+      if (supervisors.length === 0) {
+        const message = STRINGS.noDataSupervisors;
+        return <div className="supervisor__message">{message}</div>;
+      }
+      return <ul className="supervisor__container">{supervisors.map(this.renderSupervisor)}</ul>;
+    }
+    return null;
+  }
+
   render() {
     const { user, onNavClick, onOpenAbout, customization } = this.props;
-    const { query } = this.state;
+    // const { query } = this.state;
 
     return <div className="home-view">
       <SupervisorHeaderBar
@@ -79,7 +106,7 @@ export class SupervisorView extends React.Component<SupervisorViewProps, Supervi
 
       <div className="container">
         <div className="supervisor">
-            <span>list of supervisors here</span>
+          {this.renderSupervisors()}
         </div>
       </div>
     </div>;
