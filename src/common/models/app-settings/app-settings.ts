@@ -23,12 +23,14 @@ import { Cluster, ClusterJS } from "../cluster/cluster";
 import { Customization, CustomizationJS } from "../customization/customization";
 import { DataCube, DataCubeJS } from "../data-cube/data-cube";
 import { Manifest } from "../manifest/manifest";
+import { Overlord, OverlordJS } from "../overlord/overlord";
 
 export interface AppSettingsValue {
   version?: number;
   clusters?: Cluster[];
   customization?: Customization;
   dataCubes?: DataCube[];
+  overlord?: Overlord;
 }
 
 export interface AppSettingsJS {
@@ -36,6 +38,7 @@ export interface AppSettingsJS {
   clusters?: ClusterJS[];
   customization?: CustomizationJS;
   dataCubes?: DataCubeJS[];
+  overlord?: OverlordJS;
 }
 
 export interface AppSettingsContext {
@@ -89,7 +92,8 @@ export class AppSettings implements Instance<AppSettingsValue, AppSettingsJS> {
       version: parameters.version,
       clusters,
       customization: Customization.fromJS(parameters.customization || {}),
-      dataCubes
+      dataCubes,
+      overlord: Overlord.fromJS(parameters.overlord || {})
     };
 
     return new AppSettings(value);
@@ -99,13 +103,15 @@ export class AppSettings implements Instance<AppSettingsValue, AppSettingsJS> {
   public clusters: Cluster[];
   public customization: Customization;
   public dataCubes: DataCube[];
+  public overlord: Overlord;
 
   constructor(parameters: AppSettingsValue) {
     const {
       version,
       clusters,
       customization,
-      dataCubes
+      dataCubes,
+      overlord
     } = parameters;
 
     for (var dataCube of dataCubes) {
@@ -119,6 +125,7 @@ export class AppSettings implements Instance<AppSettingsValue, AppSettingsJS> {
     this.clusters = clusters;
     this.customization = customization;
     this.dataCubes = dataCubes;
+    this.overlord = overlord;
   }
 
   public valueOf(): AppSettingsValue {
@@ -126,7 +133,8 @@ export class AppSettings implements Instance<AppSettingsValue, AppSettingsJS> {
       version: this.version,
       clusters: this.clusters,
       customization: this.customization,
-      dataCubes: this.dataCubes
+      dataCubes: this.dataCubes,
+      overlord: this.overlord
     };
   }
 
@@ -136,6 +144,7 @@ export class AppSettings implements Instance<AppSettingsValue, AppSettingsJS> {
     js.clusters = this.clusters.map(cluster => cluster.toJS());
     js.customization = this.customization.toJS();
     js.dataCubes = this.dataCubes.map(dataCube => dataCube.toJS());
+    js.overlord = this.overlord.toJS();
     return js;
   }
 
@@ -212,6 +221,10 @@ export class AppSettings implements Instance<AppSettingsValue, AppSettingsJS> {
 
   public getSuggestedCubes(): DataCube[] {
     return this.dataCubes;
+  }
+
+  public getOverlord(): Overlord {
+    return this.overlord;
   }
 
   changeCustomization(customization: Customization): AppSettings {

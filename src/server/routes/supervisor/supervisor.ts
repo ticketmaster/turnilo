@@ -25,10 +25,10 @@ export function supervisorRouter(settingsGetter: SettingsGetter) {
   router.get("/", async (req: Request, res: Response) => {
     const { url } = req.query;
     try {
-      // const settings = await settingsGetter();
-      // const host = settings.overlord.host;
+      const settings = await settingsGetter();
+      const host = settings.overlord.host;
       const data = await request
-      .get("http://mydruid.com:8081/druid/indexer/v1/supervisor?full", { json: true })
+      .get(`http://${host}/druid/indexer/v1/supervisor?full`, { json: true })
       .promise();
 
       res.json({
