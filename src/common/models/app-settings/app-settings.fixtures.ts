@@ -297,7 +297,10 @@ export class AppSettingsFixtures {
       ],
       dataCubes: [
         DataCubeFixtures.WIKI_JS
-      ]
+      ],
+      overlord: {
+        host: null
+      }
     };
   }
 
@@ -313,7 +316,10 @@ export class AppSettingsFixtures {
       dataCubes: [
         DataCubeFixtures.WIKI_JS,
         DataCubeFixtures.TWITTER_JS
-      ]
+      ],
+      overlord: {
+        host: null
+      }
     };
   }
 

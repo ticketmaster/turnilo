@@ -110,7 +110,10 @@ describe("AppSettings", () => {
       expect(AppSettings.BLANK.toJS()).to.deep.equal({
         clusters: [],
         customization: {},
-        dataCubes: []
+        dataCubes: [],
+        overlord: {
+          host: null
+        }
       });
     });
 
@@ -303,7 +306,10 @@ describe("AppSettings", () => {
             timeAttribute: "time",
             title: "Wiki"
           }
-        ]
+        ],
+        overlord: {
+          host: null
+        }
       });
     });
 
